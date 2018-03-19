@@ -22,7 +22,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   request(options, function(err, res, body) {
     res.setEncoding('utf8');
-    //This is to check if the avatar director exists
+    //This is to check if the avatar directory exists
     if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
   }
