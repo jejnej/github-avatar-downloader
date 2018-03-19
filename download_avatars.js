@@ -3,12 +3,14 @@ var secrets = require("./secrets.js");
 var fs = require('fs');
 var rOwner = process.argv[2];
 var rName = process.argv[3];
+var dir = './avatars';
+
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
   if (rOwner === undefined || rName === undefined) {
     console.log("Please provide valid Repo Owner and Repo Name");
-    return
+    return;
   }
   var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
@@ -20,6 +22,10 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   request(options, function(err, res, body) {
     res.setEncoding('utf8');
+    //This is to check if the avatar director exists
+    if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
     var arr = JSON.parse(body);
     arr.forEach(function(user){
       cb(err, user)
